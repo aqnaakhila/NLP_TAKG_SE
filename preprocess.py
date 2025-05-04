@@ -1,7 +1,7 @@
 import argparse
 from collections import Counter
 import torch
-import pykp
+import pykp.io
 import config
 import gensim
 import os
@@ -26,7 +26,7 @@ def read_src_trg_files(opt, tag="train"):
     tokenized_src = []
     tokenized_trg = []
 
-    for src_line, trg_line in zip(open(src_file, 'r'), open(trg_file, 'r')):
+    for src_line, trg_line in zip(open(src_file, 'r', encoding='utf-8'), open(trg_file, 'r', encoding='utf-8')):
         # process src and trg line
         src_word_list = src_line.strip().split(' ')
         trg_list = trg_line.strip().split(';')  # a list of target sequences

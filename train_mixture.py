@@ -2,7 +2,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 from pykp.masked_loss import masked_cross_entropy
 from utils.statistics import LossStatistics
-from utils import time_since, convert_time2str
+from utils.time_log import time_since, convert_time2str
 from evaluate import evaluate_loss
 import time
 import math

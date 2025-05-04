@@ -5,7 +5,7 @@ import torch
 from pykp.masked_loss import masked_cross_entropy
 from utils.statistics import LossStatistics
 import time
-from utils import time_since
+from utils.time_log import time_since
 # from nltk.stem.porter import *
 import logging
 import os

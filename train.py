@@ -13,7 +13,7 @@ import train_mixture
 from pykp.io import SEP_WORD, EOS_WORD
 from pykp.model import Seq2SeqModel, NTM
 
-from utils import time_since
+from utils.time_log import time_since
 from utils.data_loader import load_data_and_vocab
 
 import os
