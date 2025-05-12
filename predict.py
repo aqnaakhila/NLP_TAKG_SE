@@ -6,15 +6,20 @@ import argparse
 
 import config
 from sequence_generator import SequenceGenerator
-from utils import time_since
+from utils.time_log import time_since
 from evaluate import evaluate_beam_search
 from utils.data_loader import load_data_and_vocab
-import pykp
+import pykp.io
 from pykp.model import Seq2SeqModel, NTM
 
 import os
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+
+# Tambahkan di bagian atas file (setelah import)
+def process_output(predictions):
+    cleaned_predictions = [pred for pred in predictions if pred != '<pad>']  # Hapus <pad> dari hasil
+    return cleaned_predictions
 
 
 def init_pretrained_model(opt):
@@ -132,6 +137,9 @@ def predict(test_data_loader, model, ntm_model, opt):
                                   )
 
     evaluate_beam_search(generator, test_data_loader, opt, delimiter_word)
+
+
+
 
 
 def main(opt):

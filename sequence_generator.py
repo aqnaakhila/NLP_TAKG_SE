@@ -239,7 +239,7 @@ class SequenceGenerator(object):
         decoder_state_transformed = decoder_state.view(decoder_layers, self.beam_size, original_batch_size,
                                                        decoder_size)[:, :, batch_idx]
         # select the hidden states of the beams specified by the beam_indices -> [dec_layers, beam_size, decoder_size]
-        decoder_state_transformed.data.copy_(decoder_state_transformed.data.index_select(1, beam_indices))
+        decoder_state_transformed.data.copy_(decoder_state_transformed.data.index_select(1, beam_indices.long()))
 
         if decoder_memory_bank is not None:
             # [batch_size * beam_size, t+1, decoder_size] -> [beam_size, t-1, decoder_size]
@@ -286,8 +286,10 @@ class SequenceGenerator(object):
         # prediction_all = src.new_ones(batch_size, max_sample_length) * self.pad_idx
 
         # unfinished_mask = torch.ones(batch_size, 1).type(torch.ByteTensor)  # all seqs in a batch are unfinihsed at the beginning
+
         unfinished_mask = src.new_ones((batch_size, 1), dtype=torch.uint8)
         unfinished_mask_all = [unfinished_mask]
+
 
         for t in range(max_sample_length):
             # Turn any copied words to UNKS
@@ -317,6 +319,10 @@ class SequenceGenerator(object):
                         sample['done'] = True
                 else:
                     pass
+
+            print("unfinished_mask:", unfinished_mask)  # Memantau mask untuk setiap timestep
+            print("raw prediction:", prediction)  # Melihat hasil raw prediction sebelum dimodifikasi
+            prediction = prediction * unfinished_mask.type_as(prediction)
 
             prediction = prediction * unfinished_mask.type_as(prediction)
 

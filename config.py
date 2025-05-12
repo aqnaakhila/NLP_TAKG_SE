@@ -228,7 +228,7 @@ def train_opts(parser):
                         help="Use CUDA on the selected device.")
 
     # Init options
-    parser.add_argument('-epochs', type=int, default=10,
+    parser.add_argument('-epochs', type=int, default=5,
                         help='Number of training epochs')
     parser.add_argument('-start_epoch', type=int, default=1,
                         help='The epoch from which to start')
@@ -347,7 +347,7 @@ def train_opts(parser):
                         help="The maximum number of batches to apply scheduled sampling")
 
     # learning rate
-    parser.add_argument('-learning_rate', type=float, default=0.001,
+    parser.add_argument('-learning_rate', type=float, default=0.0001,
                         help="""Starting learning rate.
                         Recommended settings: sgd = 1, adagrad = 0.1,
                         adadelta = 1, adam = 0.001""")
